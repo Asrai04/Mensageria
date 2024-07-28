@@ -12,7 +12,7 @@ internal class program()
     async static void ListenAsync()
     {
         HttpListener listener = new();
-        listener.Prefixes.Add("http://localhost:50001/");
+        listener.Prefixes.Add("http://localhost:60001/");
         listener.Start();
 
         while (true)
@@ -21,7 +21,17 @@ internal class program()
 
             string? url = context.Request.RawUrl;
             int CReturn = (int)HttpStatusCode.OK;
-            string mensaje = "nice";
+            string mensaje = "niceer";
+
+            if (url == null)
+            {
+                mensaje = "URL vacia";
+                CReturn = (int)HttpStatusCode.InternalServerError;
+            }
+            else if (url.StartsWith("/conectar"))
+            {
+                mensaje = "todo niceeeeee";
+            }
 
             context.Response.ContentLength64 = Encoding.UTF8.GetByteCount(mensaje);
             context.Response.StatusCode = CReturn;
@@ -30,6 +40,5 @@ internal class program()
                 await writer.WriteAsync(mensaje);
 
         }
-
     }
 }
