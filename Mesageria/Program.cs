@@ -21,7 +21,7 @@ internal class program()
 
             string? url = context.Request.RawUrl;
             int CReturn = (int)HttpStatusCode.OK;
-            string mensaje = "niceer";
+            string mensaje = "";
 
             if (url == null)
             {
@@ -31,6 +31,17 @@ internal class program()
             else if (url.StartsWith("/conectar"))
             {
                 mensaje = "todo niceeeeee";
+            }
+            else if (url.StartsWith("/escribir"))
+            {
+                var MsgUsua = context.Request.QueryString.Get("txt");
+
+                if (MsgUsua != null)
+                {
+
+                }
+
+                else CReturn = (int)HttpStatusCode.InternalServerError;
             }
 
             context.Response.ContentLength64 = Encoding.UTF8.GetByteCount(mensaje);
