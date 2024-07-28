@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using Mesageria;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text;
 
@@ -11,6 +12,7 @@ internal class program()
     }
     async static void ListenAsync()
     {
+        Text texto = new();
         HttpListener listener = new();
         listener.Prefixes.Add("http://localhost:60001/");
         listener.Start();
@@ -38,10 +40,15 @@ internal class program()
 
                 if (MsgUsua != null)
                 {
-
+                    texto.Escribe(MsgUsua);
+                    mensaje = "OK";
                 }
 
                 else CReturn = (int)HttpStatusCode.InternalServerError;
+            }
+            else if (url.StartsWith("/mostrar"))
+            {
+                mensaje = texto.Mandar();
             }
 
             context.Response.ContentLength64 = Encoding.UTF8.GetByteCount(mensaje);
