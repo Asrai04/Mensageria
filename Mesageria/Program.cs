@@ -8,7 +8,7 @@ internal class program()
     public static void Main(string[] args)
     {
         ListenAsync();
-        Console.ReadKey();
+        Console.ReadKey(); //mantener el server abierto
     }
     async static void ListenAsync()
     {
