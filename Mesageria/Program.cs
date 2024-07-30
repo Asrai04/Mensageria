@@ -16,6 +16,7 @@ internal class program()
         HttpListener listener = new();
         listener.Prefixes.Add("http://localhost:60001/");
         listener.Start();
+        string contra = "";
 
         while (true)
         {
@@ -40,7 +41,7 @@ internal class program()
 
                 if (MsgUsua != null)
                 {
-                    texto.Escribe(MsgUsua);
+                    texto.Escribe(MsgUsua, contra);
                     mensaje = "OK";
                 }
 
@@ -48,7 +49,30 @@ internal class program()
             }
             else if (url.StartsWith("/mostrar"))
             {
-                mensaje = texto.Mandar();
+                mensaje = texto.Mandar(contra);
+            }
+            else if (url.StartsWith("/password"))
+            {
+                var PassUsua = context.Request.QueryString.Get("txt");
+
+                if (PassUsua != null)
+                {
+                    if (contra == "")
+                    {
+                        contra = PassUsua;
+                        mensaje = "Contraseña establecida";
+                    }
+                    else if (contra == PassUsua)
+                    {
+                        contra = PassUsua;
+                        mensaje = "Contraseña establecida";
+                    }
+                    else if (contra != PassUsua)
+                    {
+                        mensaje = "error";
+                        contra = "";
+                    }
+                }
             }
 
             context.Response.ContentLength64 = Encoding.UTF8.GetByteCount(mensaje);

@@ -9,19 +9,36 @@ namespace Mesageria
     internal class Text
     {
         private string contenido;
+        private string contenido2;
 
-        public Text() {
+        public Text() 
+        {
             contenido = "";
+            contenido2 = "";
         }
 
-        public void Escribe(string txt)
+        public void Escribe(string txt, string con)
         {
-            contenido += txt + "\n";
+            if (con != "")
+            {
+                contenido2 += txt + "\n";
+            }
+            else
+            {
+                contenido += txt + "\n";
+            }
         }
 
-        public string Mandar()
+        public string Mandar(string con)
         {
-            return contenido;
+            if (con != "")
+            {
+                return contenido2;
+            }
+            else
+            {
+                return contenido;
+            }
         }
     }
 }
